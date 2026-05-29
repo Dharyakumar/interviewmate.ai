@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewMate AI</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:40px 0;
+        }
+
+        .container{
+    width:700px;
+    background:#1e293b;
+    padding:40px;
+    border-radius:15px;
+    max-height:90vh;
+    overflow-y:auto;
+}
+
+        h1{
+            margin-bottom:20px;
+        }
+
+        p{
+            margin-bottom:20px;
+            font-size:20px;
+        }
+
+        textarea{
+            width:100%;
+            height:150px;
+            padding:10px;
+            border-radius:10px;
+            border:none;
+            resize:none;
+        }
+
+        button{
+            margin-top:20px;
+            padding:12px 25px;
+            border:none;
+            border-radius:8px;
+            background:#2563eb;
+            color:white;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="questionNumber">Question 1 of 5</h1>
+
+<p id="questionText">Tell me about yourself.</p>
+
+    <textarea id="answerBox" placeholder="Type your answer here..."></textarea>
+
+    <button id="nextBtn">Next Question</button>
+</div>
+<script>
+
+
+    
+
+const questions = [
+    "Tell me about yourself.",
+    "What are your strengths?",
+    "What are your weaknesses?",
+    "Why should we hire you?",
+    "Where do you see yourself in 5 years?"
+];
+
+const answers = [];
+
+let currentQuestion = 0;
+let score = 0;
+
+
+
+
+const questionText = document.getElementById("questionText");
+const questionNumber = document.getElementById("questionNumber");
+const nextBtn = document.getElementById("nextBtn");
+
+nextBtn.addEventListener("click", () => {
+    const answer = document.getElementById("answerBox").value;
+     answers.push(answer);
+     if(answer.length > 20){
+          score += 20;
+}
+
+    currentQuestion++;
+    document.getElementById("answerBox").value = "";
+
+    if(currentQuestion < questions.length){
+
+        questionText.textContent = questions[currentQuestion];
+
+        questionNumber.textContent =
+            `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    } else {
+
+    console.log("Final score:", score);
+    document.querySelector(".container").innerHTML = `
+        <h1>Interview Completed!</h1>
+<h2>Score: ${score}/100</h2>
+        <h2>Your Answers</h2>
+
+        ${answers.map((answer, index) => `
+    <div style="margin-bottom:30px">
+
+        <h3>Question ${index + 1}</h3>
+
+        <p>
+            <strong>Question:</strong><br>
+            ${questions[index]}
+        </p>
+
+        <p>
+            <strong>Your Answer:</strong><br>
+            ${answer}
+        </p>
+
+        <hr>
+
+    </div>
+`).join("")}
+    `;
+}
+});
+
+
+
+</script>
+
+</body>
+</html>
