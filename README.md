@@ -1,4 +1,4 @@
-# InterviewMate AI 🚀
+# InterviewMate AI 
 
 InterviewMate AI is an interview preparation platform that helps students and job seekers practice mock interviews and receive structured feedback.
 
