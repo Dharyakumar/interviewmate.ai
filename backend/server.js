@@ -13,17 +13,44 @@ app.get("/api/question", (req, res) => {
     });
 });
 
+const mongoose = require("mongoose");
+
+const Answer = require("./models/Answer");
+
+mongoose.connect("mongodb+srv://dharya:dharya@cluster0.2gwg1jt.mongodb.net/?appName=Cluster0")
+.then(() => {
+    console.log("MongoDB Connected");
+})
+.catch((err) => {
+    console.log(err);
+});
+
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
 
-app.post("/api/answer", (req, res) => {
+app.post("/api/answer", async (req, res) => {
 
-    const answer = req.body.answer;
+    try {
 
-    res.json({
-        received: answer,
-        message: "Answer submitted successfully"
-    });
+        const newAnswer = new Answer({
+            answer: req.body.answer
+        });
+
+        await newAnswer.save();
+
+        res.json({
+            success: true,
+            message: "Answer Saved"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 
 });
